@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Waves — Consultoría de TI</title>
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════
+       NAVIGATION
+       ═══════════════════════════════════════════════════════ -->
+  <nav id="navbar">
+    <a href="#" class="nav-logo">Pixel <span>Waves</span></a>
+
+    <ul class="nav-links">
+      <li><a href="#servicios" data-i18n="nav.services">Servicios</a></li>
+      <li><a href="#nosotros"  data-i18n="nav.about">Nosotros</a></li>
+      <li><a href="#contacto"  data-i18n="nav.contact">Contacto</a></li>
+      <li>
+        <button class="lang-toggle" onclick="toggleLang()" id="langBtn" aria-label="Cambiar idioma">
+          <span class="lang-flag" id="langFlag">🇺🇸</span>
+          <span class="lang-label" id="langLabel">EN</span>
+        </button>
+      </li>
+      <li><a href="#contacto" class="nav-cta" data-i18n="nav.cta">Solicitar cotización</a></li>
+    </ul>
+  </nav>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       HERO
+       ═══════════════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="hero-blob hero-blob-1"></div>
+    <div class="hero-blob hero-blob-2"></div>
+
+    <!-- Left: copy -->
+    <div class="hero-content">
+      <div class="hero-tag" data-i18n="hero.tag">Consultoría de Tecnología</div>
+
+      <h1 data-i18n-html="hero.h1">Soluciones TI que <em>impulsan</em> tu negocio</h1>
+
+      <p data-i18n="hero.p">
+        Somos un equipo de profesionales especializados en tecnología.
+        Desde soporte técnico hasta desarrollo de software e inteligencia
+        artificial — todo en un solo lugar.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#servicios" class="btn-primary"   data-i18n="hero.btn1">Ver servicios</a>
+        <a href="#contacto"  class="btn-secondary" data-i18n="hero.btn2">Hablar con un experto</a>
+      </div>
+    </div>
+
+    <!-- Right: stat cards -->
+    <div class="hero-visual">
+      <div class="stats-grid">
+
+        <div class="stat-card">
+          <div class="stat-icon">🛡️</div>
+          <div class="stat-num">L1 & L2</div>
+          <div class="stat-label" data-i18n="hero.card1.label">Soporte técnico</div>
+          <div class="stat-desc"  data-i18n="hero.card1.desc">Atención rápida para problemas del día a día o fallas complejas.</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">📷</div>
+          <div class="stat-num">CCTV</div>
+          <div class="stat-label" data-i18n="hero.card2.label">Videovigilancia</div>
+          <div class="stat-desc"  data-i18n="hero.card2.desc">Instalación y configuración de cámaras con acceso remoto.</div>
+        </div>
+
+        <div class="stat-card featured">
+          <div class="stat-icon">🤖</div>
+          <div class="stat-num">IA + Bots</div>
+          <div class="stat-label" data-i18n="hero.card3.label">Automatización inteligente</div>
+          <div class="stat-desc"  data-i18n="hero.card3.desc">Ahorra tiempo con bots personalizados y modelos de inteligencia artificial aplicados a tu negocio.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       SERVICES
+       ═══════════════════════════════════════════════════════ -->
+  <section id="servicios">
+
+    <div class="services-intro reveal">
+      <div>
+        <span class="section-label" data-i18n="services.label">Lo que hacemos</span>
+        <h2 class="section-title" data-i18n="services.title">Servicios pensados para cada necesidad</h2>
+        <p class="section-sub"    data-i18n="services.sub">Desde el mantenimiento básico hasta proyectos de desarrollo complejos, contamos con el perfil técnico para acompañarte en cada etapa.</p>
+      </div>
+
+      <div class="filter-pills">
+        <button class="pill active" onclick="filterCards('all',       this)" data-i18n="filter.all">Todos</button>
+        <button class="pill"        onclick="filterCards('soporte',   this)" data-i18n="filter.support">Soporte</button>
+        <button class="pill"        onclick="filterCards('seguridad', this)" data-i18n="filter.security">Seguridad</button>
+        <button class="pill"        onclick="filterCards('redes',     this)" data-i18n="filter.networks">Redes</button>
+        <button class="pill"        onclick="filterCards('desarrollo',this)" data-i18n="filter.dev">Desarrollo</button>
+        <button class="pill"        onclick="filterCards('ia',        this)" data-i18n="filter.ai">IA & Automatización</button>
+      </div>
+    </div>
+
+    <div class="services-grid" id="servicesGrid">
+
+      <!-- Soporte -->
+      <div class="svc-card reveal" data-cat="soporte">
+        <div class="svc-icon-wrap">🖥️</div>
+        <div class="svc-name" data-i18n="svc.s1.name">Soporte Técnico Nivel 1 y 2</div>
+        <div class="svc-desc" data-i18n="svc.s1.desc">Atención a fallas del día a día: software que no abre, errores del sistema, configuraciones, impresoras y periféricos. Respuesta rápida presencial o remota.</div>
+        <span class="svc-tag" data-i18n="filter.support">Soporte</span>
+      </div>
+
+      <div class="svc-card reveal" data-cat="soporte">
+        <div class="svc-icon-wrap">🔧</div>
+        <div class="svc-name" data-i18n="svc.s2.name">Diagnóstico y Reparación de Hardware</div>
+        <div class="svc-desc" data-i18n="svc.s2.desc">Identificamos el problema exacto en tu equipo: placa, fuente, memoria, almacenamiento. Sin diagnósticos ambiguos, con presupuesto claro.</div>
+        <span class="svc-tag" data-i18n="filter.support">Soporte</span>
+      </div>
+
+      <div class="svc-card reveal" data-cat="soporte">
+        <div class="svc-icon-wrap">🎮</div>
+        <div class="svc-name" data-i18n="svc.s3.name">Armado y Configuración de PCs</div>
+        <div class="svc-desc" data-i18n="svc.s3.desc">Ensamblamos tu equipo a medida, desde estaciones de trabajo profesionales hasta builds gaming de alto rendimiento. Optimizados desde el primer arranque.</div>
+        <span class="svc-tag" data-i18n="filter.support">Soporte</span>
+      </div>
+
+      <div class="svc-card reveal" data-cat="soporte">
+        <div class="svc-icon-wrap">📊</div>
+        <div class="svc-name" data-i18n="svc.s4.name">Soporte en Herramientas de Productividad</div>
+        <div class="svc-desc" data-i18n="svc.s4.desc">Capacitación y soporte avanzado en Excel, Word, PowerPoint y Microsoft 365. Optimiza el flujo de trabajo de tu equipo desde hoy.</div>
+        <span class="svc-tag" data-i18n="filter.support">Soporte</span>
+      </div>
+
+      <!-- Seguridad -->
+      <div class="svc-card reveal" data-cat="seguridad">
+        <div class="svc-icon-wrap">📷</div>
+        <div class="svc-name" data-i18n="svc.s5.name">Instalación de Sistemas de Videovigilancia</div>
+        <div class="svc-desc" data-i18n="svc.s5.desc">Diseñamos y montamos tu sistema CCTV o IP desde cero. Cobertura interior y exterior, con acceso remoto desde tu teléfono en tiempo real.</div>
+        <span class="svc-tag" data-i18n="filter.security">Seguridad</span>
+      </div>
+
+      <div class="svc-card reveal" data-cat="seguridad">
+        <div class="svc-icon-wrap">🔍</div>
+        <div class="svc-name" data-i18n="svc.s6.name">Mantenimiento de Cámaras de Seguridad</div>
+        <div class="svc-desc" data-i18n="svc.s6.desc">Actualizamos firmware, ajustamos ángulos, revisamos grabaciones y optimizamos el almacenamiento. Tu sistema siempre funcionando al máximo.</div>
+        <span class="svc-tag" data-i18n="filter.security">Seguridad</span>
+      </div>
+
+      <!-- Redes -->
+      <div class="svc-card reveal" data-cat="redes">
+        <div class="svc-icon-wrap">🌐</div>
+        <div class="svc-name" data-i18n="svc.s7.name">Instalación y Configuración de Redes</div>
+        <div class="svc-desc" data-i18n="svc.s7.desc">Cableado estructurado, routers, switches y puntos de acceso Wi-Fi para hogares, oficinas y negocios. Redes estables y bien planeadas.</div>
+        <span class="svc-tag" data-i18n="filter.networks">Redes</span>
+      </div>
+
+      <div class="svc-card reveal" data-cat="redes">
+        <div class="svc-icon-wrap">🔐</div>
+        <div class="svc-name" data-i18n="svc.s8.name">Acceso Remoto Seguro</div>
+        <div class="svc-desc" data-i18n="svc.s8.desc">Configuramos SSH y acceso seguro a tus servidores y sistemas internos. Gestiona tu infraestructura desde cualquier lugar con total seguridad.</div>
+        <span class="svc-tag" data-i18n="filter.networks">Redes</span>
+      </div>
+
+      <!-- Desarrollo -->
+      <div class="svc-card reveal" data-cat="desarrollo">
+        <div class="svc-icon-wrap">💻</div>
+        <div class="svc-name" data-i18n="svc.s9.name">Desarrollo de Páginas Web</div>
+        <div class="svc-desc" data-i18n="svc.s9.desc">Sitios modernos, rápidos y optimizados para móvil. Desde landing pages hasta portales con funcionalidades avanzadas. Diseño profesional incluido.</div>
+        <span class="svc-tag" data-i18n="filter.dev">Desarrollo</span>
+      </div>
+
+      <div class="svc-card reveal" data-cat="desarrollo">
+        <div class="svc-icon-wrap">⚙️</div>
+        <div class="svc-name" data-i18n="svc.s10.name">Sistemas a Medida</div>
+        <div class="svc-desc" data-i18n="svc.s10.desc">Aplicaciones de escritorio y web para tu negocio: punto de venta, control de inventario, catálogos digitales. Soluciones que se adaptan a ti, no al revés.</div>
+        <span class="svc-tag" data-i18n="filter.dev">Desarrollo</span>
+      </div>
+
+      <div class="svc-card reveal" data-cat="desarrollo">
+        <div class="svc-icon-wrap">🔌</div>
+        <div class="svc-name" data-i18n="svc.s11.name">Integración con APIs</div>
+        <div class="svc-desc" data-i18n="svc.s11.desc">Conectamos tu sistema con servicios externos: pasarelas de pago, WhatsApp Business, plataformas de envío, ERPs y más. Todo integrado sin fricciones.</div>
+        <span class="svc-tag" data-i18n="filter.dev">Desarrollo</span>
+      </div>
+
+      <!-- IA -->
+      <div class="svc-card reveal" data-cat="ia">
+        <div class="svc-icon-wrap">🤖</div>
+        <div class="svc-name" data-i18n="svc.s12.name">Bots de Automatización</div>
+        <div class="svc-desc" data-i18n="svc.s12.desc">Automatizamos tareas repetitivas: respuestas automáticas, reportes, notificaciones, captura de datos. Ahorra horas de trabajo desde el día uno.</div>
+        <span class="svc-tag" data-i18n="filter.ai">IA & Automatización</span>
+      </div>
+
+      <div class="svc-card reveal" data-cat="ia">
+        <div class="svc-icon-wrap">👁️</div>
+        <div class="svc-name" data-i18n="svc.s13.name">Visión por Computadora con IA</div>
+        <div class="svc-desc" data-i18n="svc.s13.desc">Desarrollamos modelos de redes convolucionales para reconocimiento de imágenes, conteo de objetos o control de calidad visual automatizado.</div>
+        <span class="svc-tag" data-i18n="filter.ai">IA & Automatización</span>
+      </div>
+
+      <div class="svc-card reveal" data-cat="ia">
+        <div class="svc-icon-wrap">📈</div>
+        <div class="svc-name" data-i18n="svc.s14.name">Análisis de Datos</div>
+        <div class="svc-desc" data-i18n="svc.s14.desc">Transformamos tus datos en dashboards e informes accionables. Toma decisiones basadas en información real, no en suposiciones.</div>
+        <span class="svc-tag" data-i18n="filter.ai">IA & Automatización</span>
+      </div>
+
+      <div class="svc-card reveal" data-cat="desarrollo">
+        <div class="svc-icon-wrap">🎨</div>
+        <div class="svc-name" data-i18n="svc.s15.name">Assets y Modelado 3D</div>
+        <div class="svc-desc" data-i18n="svc.s15.desc">Creamos modelos 3D para videojuegos, renders de producto, arquitectura o prototipado visual. Arte digital de alta calidad a tu medida.</div>
+        <span class="svc-tag" data-i18n="filter.dev">Desarrollo</span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       WHY US
+       ═══════════════════════════════════════════════════════ -->
+  <section id="nosotros">
+
+    <div style="text-align:center; margin-bottom: 40px;" class="reveal">
+      <span class="section-label" data-i18n="about.label">Por qué elegirnos</span>
+      <h2 class="section-title" style="margin:0 auto; text-align:center;" data-i18n="about.title">Profesionales reales, soluciones reales</h2>
+      <p class="section-sub"  style="margin:16px auto 0; text-align:center;" data-i18n="about.sub">No somos un intermediario. Somos el equipo técnico que ejecuta cada proyecto de principio a fin.</p>
+    </div>
+
+
+
+    <div class="reasons-grid reveal">
+      <div class="reason-item">
+        <div class="reason-num">01</div>
+        <div class="reason-title" data-i18n="about.r1.title">Equipo multidisciplinario</div>
+        <div class="reason-text"  data-i18n="about.r1.text">Cubrimos desde soporte básico hasta inteligencia artificial. Un solo proveedor para todas tus necesidades tecnológicas.</div>
+      </div>
+      <div class="reason-item">
+        <div class="reason-num">02</div>
+        <div class="reason-title" data-i18n="about.r2.title">Atención directa y personalizada</div>
+        <div class="reason-text"  data-i18n="about.r2.text">Hablas siempre con quien realiza el trabajo. Sin call centers, sin intermediarios, sin respuestas genéricas.</div>
+      </div>
+      <div class="reason-item">
+        <div class="reason-num">03</div>
+        <div class="reason-title" data-i18n="about.r3.title">Presupuestos claros</div>
+        <div class="reason-text"  data-i18n="about.r3.text">Cotizamos con transparencia. Sabrás exactamente qué incluye el servicio antes de aprobar cualquier trabajo.</div>
+      </div>
+      <div class="reason-item">
+        <div class="reason-num">04</div>
+        <div class="reason-title" data-i18n="about.r4.title">Disponibilidad real</div>
+        <div class="reason-text"  data-i18n="about.r4.text">Atendemos de manera presencial y remota. Nos adaptamos a tus tiempos y urgencias con rapidez de respuesta.</div>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       CONTACT
+       ═══════════════════════════════════════════════════════ -->
+  <section id="contacto">
+    <div class="contact-wrap">
+
+      <!-- Left: info -->
+      <div class="contact-info reveal">
+        <span class="section-label" data-i18n="contact.label">Contacto</span>
+        <h2 class="section-title"   data-i18n="contact.title">¿Listo para empezar?</h2>
+        <p class="section-sub"      data-i18n="contact.sub">Cuéntanos tu proyecto o problema. Te respondemos en menos de 24 horas con una propuesta concreta.</p>
+
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="contact-item-icon">📧</div>
+            <div class="contact-item-text">
+              <strong data-i18n="contact.email.label">Correo electrónico</strong>
+              <a href="mailto:contactopixelwaves@gmail.com">contactopixelwaves@gmail.com</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📱</div>
+            <div class="contact-item-text">
+              <strong>WhatsApp</strong>
+              <a href="https://wa.me/524493467208" target="_blank" rel="noopener">+52 449 346 7208</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📍</div>
+            <div class="contact-item-text">
+              <strong data-i18n="contact.location.label">Ubicación</strong>
+              <span   data-i18n="contact.location.value">Aguascalientes, México · Servicio local y remoto</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: form -->
+      <div class="form-card reveal">
+        <div class="form-title" data-i18n="form.title">Solicitar cotización</div>
+        <div class="form-sub"   data-i18n="form.sub">Sin compromisos. Te respondemos con claridad.</div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label data-i18n="form.name">Nombre</label>
+            <input type="text" id="f-name" data-i18n-ph="form.ph.name" placeholder="Tu nombre">
+          </div>
+          <div class="form-group">
+            <label data-i18n="form.company">Empresa (opcional)</label>
+            <input type="text" id="f-company" data-i18n-ph="form.ph.company" placeholder="Nombre de tu empresa">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label data-i18n="form.email">Correo electrónico</label>
+          <input type="email" id="f-email" placeholder="correo@ejemplo.com">
+        </div>
+
+        <div class="form-group">
+          <label data-i18n="form.service">Servicio de interés</label>
+          <select id="f-service">
+            <option value="" disabled selected data-i18n="form.ph.service">Selecciona un servicio</option>
+            <option data-i18n="svc.s1.name">Soporte Técnico Nivel 1 y 2</option>
+            <option data-i18n="svc.s2.name">Diagnóstico y Reparación de Hardware</option>
+            <option data-i18n="svc.s3.name">Armado y Configuración de PCs</option>
+            <option data-i18n="svc.s5.name">Instalación de Sistemas de Videovigilancia</option>
+            <option data-i18n="svc.s7.name">Instalación y Configuración de Redes</option>
+            <option data-i18n="svc.s9.name">Desarrollo de Páginas Web</option>
+            <option data-i18n="svc.s10.name">Sistemas a Medida</option>
+            <option data-i18n="svc.s12.name">Bots de Automatización</option>
+            <option data-i18n="svc.s14.name">Análisis de Datos</option>
+            <option data-i18n="svc.s15.name">Assets y Modelado 3D</option>
+            <option data-i18n="form.other">Otro</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label data-i18n="form.message">Cuéntanos más</label>
+          <textarea id="f-msg" data-i18n-ph="form.ph.message" placeholder="Describe brevemente tu necesidad o problema..."></textarea>
+        </div>
+
+        <button class="form-submit" id="submitBtn" onclick="handleSubmit()" data-i18n="form.submit">
+          Enviar solicitud
+        </button>
+
+        <!-- Status message (success / error) -->
+        <div id="formStatus" class="form-status"></div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════ -->
+  <footer>
+    <a href="#" class="footer-logo">Pixel <span>Waves</span></a>
+    <p data-i18n="footer.copy">© 2026 Pixel Waves — Consultoría de TI. Aguascalientes, México.</p>
+    <div class="footer-links">
+      <a href="#servicios" data-i18n="nav.services">Servicios</a>
+      <a href="#nosotros"  data-i18n="nav.about">Nosotros</a>
+      <a href="#contacto"  data-i18n="nav.contact">Contacto</a>
+    </div>
+  </footer>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       SCRIPTS  (order matters: i18n → contact → main)
+       ═══════════════════════════════════════════════════════ -->
+  <script src="js/i18n.js"></script>
+  <script src="js/contact.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>
