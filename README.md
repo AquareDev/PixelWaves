@@ -1,1 +1,3 @@
-# PixelWaves
+# BIENVENIDO A PIXEL WAVES
+
+En un entorno empresarial dinámico, la estabilidad de los sistemas y la automatización son pilares fundamentales para el éxito. Como expertos en TI, ofrecemos un ecosistema integral de servicios diseñado para que delegue la gestión de su tecnología con absoluta tranquilidad. Destacamos por nuestra capacidad analítica para resolver contingencias operativas críticas en hardware y conectividad, proteger sus activos mediante seguridad electrónica avanzada (CCTV), y optimizar sus flujos de trabajo a través de desarrollo web moderno, sistemas a medida y automatización inteligente con visión por computadora. Nos distingue la transparencia, la precisión técnica y el compromiso inquebrantable con la continuidad y seguridad de su infraestructura
