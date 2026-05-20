@@ -217,6 +217,9 @@ const CATEGORY_KEYS = Object.keys(catalog);
 let selectedComponents = {};   // { cpu: item, gpu: item, ... }
 let activeCategory = 'cpu';
 
+/* ─── Filter state ─── */
+let activeFilter = { brand: 'all', tier: 'all', sort: 'default' };
+
 /* =============================================================
    RENDER HELPERS
    ============================================================= */
@@ -239,7 +242,31 @@ function renderComponents(catKey) {
   const cat  = catalog[catKey];
   if (!grid || !cat) return;
 
-  grid.innerHTML = cat.items.map(item => `
+  /* ── apply filters ── */
+  let items = [...cat.items];
+
+  if (activeFilter.brand !== 'all') {
+    items = items.filter(i => i.brand === activeFilter.brand);
+  }
+  if (activeFilter.tier !== 'all') {
+    items = items.filter(i => i.tier === activeFilter.tier);
+  }
+  if (activeFilter.sort === 'asc') {
+    items.sort((a, b) => a.price - b.price);
+  } else if (activeFilter.sort === 'desc') {
+    items.sort((a, b) => b.price - a.price);
+  }
+
+  if (items.length === 0) {
+    grid.innerHTML = `
+      <div class="filter-empty">
+        <div class="empty-icon">🔍</div>
+        <p>Sin resultados para este filtro</p>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = items.map(item => `
     <div class="comp-item ${selectedComponents[catKey]?.id === item.id ? 'selected' : ''}"
          onclick="selectComponent('${catKey}','${item.id}')">
       <span class="comp-tier tier-${item.tier}">${getTierLabel(item.tier)}</span>
@@ -312,6 +339,8 @@ function switchCategory(catKey) {
   document.querySelectorAll('.cat-tab').forEach(t => {
     t.classList.toggle('active', t.dataset.cat === catKey);
   });
+  resetFilters();
+  updateBrandPills(catKey);
   renderComponents(catKey);
 }
 
@@ -456,6 +485,67 @@ function closeModal() {
 }
 
 /* =============================================================
+   FILTER INIT & LOGIC
+   ============================================================= */
+function initFilters() {
+  /* Brand pills */
+  document.getElementById('filterBrand')?.addEventListener('click', e => {
+    const pill = e.target.closest('[data-brand]');
+    if (!pill) return;
+    activeFilter.brand = pill.dataset.brand;
+    document.querySelectorAll('#filterBrand .filter-pill').forEach(p =>
+      p.classList.toggle('active', p.dataset.brand === activeFilter.brand)
+    );
+    renderComponents(activeCategory);
+  });
+
+  /* Tier pills */
+  document.getElementById('filterTier')?.addEventListener('click', e => {
+    const pill = e.target.closest('[data-tier]');
+    if (!pill) return;
+    activeFilter.tier = pill.dataset.tier;
+    document.querySelectorAll('#filterTier .filter-pill').forEach(p =>
+      p.classList.toggle('active', p.dataset.tier === activeFilter.tier)
+    );
+    renderComponents(activeCategory);
+  });
+
+  /* Sort pills */
+  document.getElementById('filterSort')?.addEventListener('click', e => {
+    const pill = e.target.closest('[data-sort]');
+    if (!pill) return;
+    activeFilter.sort = pill.dataset.sort;
+    document.querySelectorAll('#filterSort .filter-pill').forEach(p =>
+      p.classList.toggle('active', p.dataset.sort === activeFilter.sort)
+    );
+    renderComponents(activeCategory);
+  });
+}
+
+/* Reset filters when switching category */
+function resetFilters() {
+  activeFilter = { brand: 'all', tier: 'all', sort: 'default' };
+  document.querySelectorAll('#filterBrand .filter-pill').forEach(p =>
+    p.classList.toggle('active', p.dataset.brand === 'all')
+  );
+  document.querySelectorAll('#filterTier .filter-pill').forEach(p =>
+    p.classList.toggle('active', p.dataset.tier === 'all')
+  );
+  document.querySelectorAll('#filterSort .filter-pill').forEach(p =>
+    p.classList.toggle('active', p.dataset.sort === 'default')
+  );
+}
+
+/* ─── Update brand pills based on available brands in category ─── */
+function updateBrandPills(catKey) {
+  const brands = [...new Set(catalog[catKey].items.map(i => i.brand))];
+  const container = document.getElementById('filterBrand');
+  if (!container) return;
+  container.innerHTML = `<button class="filter-pill active" data-brand="all">Todas</button>` +
+    brands.map(b => `<button class="filter-pill" data-brand="${b}">${b}</button>`).join('');
+}
+
+/* =============================================================
    NAV TABS INIT
    ============================================================= */
 function initCatTabs() {
@@ -500,6 +590,8 @@ document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 document.addEventListener('DOMContentLoaded', () => {
   initBuilderEmailJS();
   initCatTabs();
+  initFilters();
+  updateBrandPills(activeCategory);
   renderComponents(activeCategory);
   renderSummary();
 });

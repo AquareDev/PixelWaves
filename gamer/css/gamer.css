@@ -541,6 +541,79 @@ section { padding: 100px 5%; }
   gap: 40px; align-items: end; margin-bottom: 40px;
 }
 
+/* ─── FILTER BAR ─── */
+.filter-bar {
+  display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end;
+  background: var(--card2);
+  border: 1px solid var(--border);
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.filter-bar::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--violet), transparent);
+}
+
+.filter-group {
+  display: flex; flex-direction: column; gap: 7px;
+}
+
+.filter-group-sort { margin-left: auto; }
+
+.filter-label {
+  font-family: var(--mono); font-size: 9px;
+  color: var(--text-3); letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.filter-pills {
+  display: flex; flex-wrap: wrap; gap: 5px;
+}
+
+.filter-pill {
+  font-family: var(--mono); font-size: 10px;
+  padding: 4px 10px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-3);
+  cursor: pointer;
+  transition: all 0.18s;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.filter-pill:hover {
+  border-color: var(--border2);
+  color: var(--text);
+}
+
+.filter-pill.active {
+  background: rgba(0,210,255,0.1);
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+/* Tier-colored pills when active */
+.tier-pill-budget.active { background: rgba(0,255,157,0.1);  border-color: var(--green);    color: var(--green);    }
+.tier-pill-mid.active    { background: rgba(0,210,255,0.1);  border-color: var(--cyan);     color: var(--cyan);     }
+.tier-pill-high.active   { background: rgba(124,58,237,0.1); border-color: var(--violet-l); color: var(--violet-l); }
+.tier-pill-ultra.active  { background: rgba(255,107,53,0.1); border-color: var(--orange);   color: var(--orange);   }
+
+.filter-empty {
+  text-align: center; padding: 60px 20px;
+  color: var(--text-3); font-family: var(--mono); font-size: 12px;
+}
+
+.filter-empty .empty-icon { font-size: 32px; margin-bottom: 12px; }
+
+@media (max-width: 768px) {
+  .filter-bar { gap: 12px; }
+  .filter-group-sort { margin-left: 0; }
+}
+
 /* Builder layout */
 .builder-layout {
   display: grid; grid-template-columns: 1fr 340px;

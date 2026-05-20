@@ -264,6 +264,42 @@
         </div>
       </div>
 
+      <!-- Filter bar -->
+      <div class="filter-bar reveal" id="filterBar">
+        <!-- Brand -->
+        <div class="filter-group">
+          <span class="filter-label">MARCA</span>
+          <div class="filter-pills" id="filterBrand">
+            <button class="filter-pill active" data-brand="all">Todas</button>
+            <button class="filter-pill" data-brand="AMD">AMD</button>
+            <button class="filter-pill" data-brand="Intel">Intel</button>
+            <button class="filter-pill" data-brand="NVIDIA">NVIDIA</button>
+          </div>
+        </div>
+
+        <!-- Tier -->
+        <div class="filter-group">
+          <span class="filter-label">TIER</span>
+          <div class="filter-pills" id="filterTier">
+            <button class="filter-pill active" data-tier="all">Todos</button>
+            <button class="filter-pill tier-pill-budget" data-tier="budget">Entry</button>
+            <button class="filter-pill tier-pill-mid"    data-tier="mid">Mid</button>
+            <button class="filter-pill tier-pill-high"   data-tier="high">High-End</button>
+            <button class="filter-pill tier-pill-ultra"  data-tier="ultra">Ultra</button>
+          </div>
+        </div>
+
+        <!-- Sort -->
+        <div class="filter-group filter-group-sort">
+          <span class="filter-label">ORDEN</span>
+          <div class="filter-pills" id="filterSort">
+            <button class="filter-pill active" data-sort="default">Default</button>
+            <button class="filter-pill" data-sort="asc">Precio ↑</button>
+            <button class="filter-pill" data-sort="desc">Precio ↓</button>
+          </div>
+        </div>
+      </div>
+
       <!-- Category tabs -->
       <div id="catTabs" class="cat-tabs reveal"></div>
 
