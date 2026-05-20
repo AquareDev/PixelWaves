@@ -14,7 +14,7 @@ const translations = {
     /* Hero */
     "hero.tag":          "Consultoría de Tecnología",
     "hero.h1":           'Soluciones TI que <em>impulsan</em> tu negocio',
-    "hero.p":            "Somos un equipo de profesionales especializados en tecnología. Desde soporte técnico hasta desarrollo de software e inteligencia artificial — todo en un solo lugar.",
+    "hero.p":            "Somos un equipo de profesionales especializados en tecnología. Desde soporte técnico hasta desarrollo de software e inteligencia artificial nos especializamos en pequeñas y medianas empresas",
     "hero.btn1":         "Ver servicios",
     "hero.btn2":         "Hablar con un experto",
     "hero.card1.label":  "Soporte técnico",
@@ -123,7 +123,7 @@ const translations = {
     /* Hero */
     "hero.tag":          "IT Consulting",
     "hero.h1":           'IT solutions that <em>power</em> your business',
-    "hero.p":            "We are a team of technology professionals. From technical support to software development and artificial intelligence — all in one place.",
+    "hero.p":            "We are a team of technology professionals. From technical support to software development and artificial intelligence we specialize in small and medium-sized businesses",
     "hero.btn1":         "View services",
     "hero.btn2":         "Talk to an expert",
     "hero.card1.label":  "Technical support",
