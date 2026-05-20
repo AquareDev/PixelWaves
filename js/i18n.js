@@ -145,6 +145,7 @@ const translations = {
     "filter.networks": "Networks",
     "filter.dev":      "Development",
     "filter.ai":       "AI & Automation",
+    "filter.videogames": "Videogames",
 
     /* Service cards */
     "svc.s1.name":  "Technical Support Level 1 & 2",
