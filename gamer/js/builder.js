@@ -103,20 +103,43 @@ const catalog = {
     label: 'GPU',
     icon: '🖥',
     items: [
-      /* NVIDIA */
-      { id: 'rtx3060',   brand:'NVIDIA', name:'GeForce RTX 3060',    spec:'12GB GDDR6 · 1080p–1440p',    tier:'budget', price:4800 },
-      { id: 'rtx3060ti', brand:'NVIDIA', name:'GeForce RTX 3060 Ti', spec:'8GB GDDR6X · 1440p',          tier:'mid',    price:5800 },
-      { id: 'rtx4060',   brand:'NVIDIA', name:'GeForce RTX 4060',    spec:'8GB GDDR6 · DLSS 3 · 1440p',  tier:'mid',    price:6200 },
-      { id: 'rtx4060ti', brand:'NVIDIA', name:'GeForce RTX 4060 Ti', spec:'16GB GDDR6 · DLSS 3 · 1440p', tier:'high',   price:8400 },
-      { id: 'rtx4070',   brand:'NVIDIA', name:'GeForce RTX 4070',    spec:'12GB GDDR6X · DLSS 3 · 2K',   tier:'high',   price:11200 },
-      { id: 'rtx4070s',  brand:'NVIDIA', name:'RTX 4070 Super',      spec:'12GB GDDR6X · DLSS 3 · 2K',   tier:'high',   price:12800 },
-      { id: 'rtx4080',   brand:'NVIDIA', name:'GeForce RTX 4080',    spec:'16GB GDDR6X · DLSS 3 · 4K',   tier:'ultra',  price:19500 },
-      { id: 'rtx4090',   brand:'NVIDIA', name:'GeForce RTX 4090',    spec:'24GB GDDR6X · DLSS 3 · 4K',   tier:'ultra',  price:32000 },
-      /* AMD Radeon */
-      { id: 'rx7600',    brand:'AMD', name:'Radeon RX 7600',   spec:'8GB GDDR6 · 1080p–1440p',  tier:'budget', price:4200 },
-      { id: 'rx7700xt',  brand:'AMD', name:'Radeon RX 7700 XT',spec:'12GB GDDR6 · 1440p',       tier:'mid',    price:6500 },
-      { id: 'rx7800xt',  brand:'AMD', name:'Radeon RX 7800 XT',spec:'16GB GDDR6 · 1440p–4K',   tier:'high',   price:9200 },
-      { id: 'rx7900xtx', brand:'AMD', name:'Radeon RX 7900 XTX',spec:'24GB GDDR6 · 4K',        tier:'ultra',  price:18500 },
+     /* ── GPU — NVIDIA GeForce ── */
+
+    /* GT / Legacy */
+    { id: 'gt730',        brand:'NVIDIA', name:'GeForce GT 730',       spec:'2GB GDDR5 · 64-bit · PCIe 2.0',   tier:'budget', price:1600  },
+    { id: 'gt1030',       brand:'NVIDIA', name:'GeForce GT 1030',      spec:'2GB GDDR4 · PCIe 3.0',            tier:'budget', price:2600  },
+
+    /* RTX 30 series */
+    { id: 'rtx3050-6g',   brand:'NVIDIA', name:'GeForce RTX 3050 6G',  spec:'6GB GDDR6 · 96-bit · PCIe 4.0',  tier:'budget', price:4700  },
+    { id: 'rtx3060-12g',  brand:'NVIDIA', name:'GeForce RTX 3060 12G', spec:'12GB GDDR6 · 192-bit · PCIe 4.0',tier:'budget', price:6000  },
+
+    /* RTX 50 series */
+    { id: 'rtx5050',      brand:'NVIDIA', name:'GeForce RTX 5050',     spec:'8GB GDDR6 · 128-bit · PCIe 5.0',  tier:'budget', price:5400  },
+    { id: 'rtx5060',      brand:'NVIDIA', name:'GeForce RTX 5060',     spec:'8GB GDDR7 · 128-bit · PCIe 5.0',  tier:'mid',    price:6400  },
+    { id: 'rtx5060ti-8g', brand:'NVIDIA', name:'GeForce RTX 5060 Ti 8G',spec:'8GB GDDR7 · 128-bit · PCIe 5.0', tier:'mid',    price:7900  },
+    { id: 'rtx5060ti-16g',brand:'NVIDIA', name:'GeForce RTX 5060 Ti 16G',spec:'16GB GDDR7 · 128-bit · PCIe 5.0',tier:'high',  price:11200 },
+    { id: 'rtx5070',      brand:'NVIDIA', name:'GeForce RTX 5070',     spec:'12GB GDDR7 · 192-bit · PCIe 5.0', tier:'high',   price:13100 },
+    { id: 'rtx5070ti',    brand:'NVIDIA', name:'GeForce RTX 5070 Ti',  spec:'16GB GDDR7 · 256-bit · PCIe 5.0', tier:'ultra',  price:19800 },
+    { id: 'rtx5080',      brand:'NVIDIA', name:'GeForce RTX 5080',     spec:'16GB GDDR7 · 256-bit · PCIe 5.0', tier:'ultra',  price:25300 },
+
+    /* NVIDIA Professional */
+    { id: 'rtx-a400',     brand:'NVIDIA', name:'RTX A400',             spec:'4GB GDDR6 · 64-bit · PCIe 4.0',   tier:'budget', price:3800  },
+    { id: 'rtx-a1000',    brand:'NVIDIA', name:'RTX A1000',            spec:'8GB GDDR6 · 128-bit · PCIe 4.0',  tier:'mid',    price:8200  },
+    { id: 'rtx-pro2000',  brand:'NVIDIA', name:'RTX Pro 2000',         spec:'16GB GDDR7 · 128-bit · PCIe 5.0', tier:'high',   price:16200 },
+    { id: 'rtx-5000ada',  brand:'NVIDIA', name:'RTX 5000 Ada',         spec:'32GB GDDR6 · 256-bit · PCIe 4.0', tier:'ultra',  price:82200 },
+
+    /* ── GPU — AMD Radeon ── */
+
+    /* RX 7000 series */
+    { id: 'rx7600',       brand:'AMD', name:'Radeon RX 7600',          spec:'8GB GDDR6 · 128-bit · PCIe 4.0',  tier:'budget', price:4900  },
+
+    /* RX 9060 series */
+    { id: 'rx9060-8g',    brand:'AMD', name:'Radeon RX 9060 XT 8G',   spec:'8GB GDDR6 · 128-bit · PCIe 5.0',  tier:'budget', price:5200  },
+    { id: 'rx9060-16g',   brand:'AMD', name:'Radeon RX 9060 XT 16G',  spec:'16GB GDDR6 · 128-bit · PCIe 5.0', tier:'mid',    price:8300  },
+
+    /* RX 9070 series */
+    { id: 'rx9070',       brand:'AMD', name:'Radeon RX 9070',         spec:'16GB GDDR6 · 256-bit · PCIe 5.0',  tier:'high',   price:12300 },
+    { id: 'rx9070xt',     brand:'AMD', name:'Radeon RX 9070 XT',      spec:'16GB GDDR6 · 256-bit · PCIe 5.0',  tier:'high',   price:13200 },
     ]
   },
 
