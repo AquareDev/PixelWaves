@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PCs Prearmadas — Pixel Waves Gamer Division</title>
+  <meta name="description" content="Computadoras gamer prearmadas y listas para enviar en Aguascalientes. Ordenar es fácil.">
+
+  <link rel="shortcut icon" href="/recursos/favicon.png" type="image/x-icon">
+
+  <!-- Fonts (preconnect first for speed) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="./prearmados.css">
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════
+       NAV
+       ═══════════════════════════════════════════════════════ -->
+  <nav id="navbar">
+    <a href="/index.html" class="nav-brand">
+      <span class="nav-brand-logo">Pixel <span>Waves</span></span>
+      <div class="nav-divider"></div>
+      <span class="nav-brand-sub">Gamer Division</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="/gamer/index.html#Soporte">Soporte</a></li>
+      <li><a href="/gamer/index.html#domicilio">A domicilio</a></li>
+      <li><a href="i/gamer/index.html#builder">Arma tu PC</a></li>
+      <li><a href="./prearmados.html" class="active-page">PCs Prearmadas</a></li>
+      <li><a href="/gamer/index.html#contacto-gamer">Contacto</a></li>
+    </ul>
+
+    <a href="../index.html" class="nav-back">← Volver al sitio principal</a>
+  </nav>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       HERO
+       ═══════════════════════════════════════════════════════ -->
+  <section class="hero-pre">
+    <div class="hero-pre-inner reveal">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-line"></div>
+        <span class="hero-eyebrow-text">Pixel Waves · Catálogo</span>
+      </div>
+
+      <h1 class="hero-h1">
+        PCs <span class="accent-cyan">Prearmadas</span><br>
+        <span class="accent-violet">Listas para ti.</span>
+      </h1>
+
+      <p class="hero-sub">
+        Equipos seleccionados por nuestros técnicos, ensamblados, probados y listos
+        para entrega en Aguascalientes. Ordena con un clic.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       FILTROS
+       ═══════════════════════════════════════════════════════ -->
+  <div class="filter-bar reveal">
+
+    <span class="filter-label">Categoría</span>
+    <div class="filter-pills" id="fCat">
+      <button class="filter-pill active" data-cat="all">Todas</button>
+      <button class="filter-pill" data-cat="entry">Entry</button>
+      <button class="filter-pill" data-cat="mid">Mid</button>
+      <button class="filter-pill" data-cat="high">High-End</button>
+      <button class="filter-pill" data-cat="ultra">Ultra</button>
+    </div>
+
+    <div class="filter-sep"></div>
+
+    <span class="filter-label">Uso</span>
+    <div class="filter-pills" id="fUse">
+      <button class="filter-pill active" data-use="all">Todos</button>
+      <button class="filter-pill" data-use="gaming">Gaming</button>
+      <button class="filter-pill" data-use="streaming">Streaming</button>
+      <button class="filter-pill" data-use="workstation">Workstation</button>
+    </div>
+
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       GRID DE PCS (renderizado por JS)
+       ═══════════════════════════════════════════════════════ -->
+  <section class="pcs-section">
+    <div class="pcs-grid" id="pcsGrid"></div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       MODAL DE ORDEN
+       ═══════════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="orderModal" onclick="if(event.target === this) closeOrderModal()">
+    <div class="modal-box">
+
+      <button class="modal-close-btn" onclick="closeOrderModal()">✕</button>
+
+      <div class="modal-pc-name"  id="mPcName"></div>
+      <div class="modal-pc-price" id="mPcPrice"></div>
+      <hr class="modal-sep">
+
+      <label class="gf-label">Tu nombre *</label>
+      <input class="gf-input" id="o-name" type="text" placeholder="Nombre completo">
+
+      <label class="gf-label">Correo electrónico *</label>
+      <input class="gf-input" id="o-email" type="email" placeholder="correo@ejemplo.com">
+
+      <label class="gf-label">WhatsApp (opcional)</label>
+      <input class="gf-input" id="o-phone" type="tel" placeholder="+52 449 000 0000">
+
+      <label class="gf-label">¿Cómo prefieres recibir la PC?</label>
+      <select class="gf-select" id="o-delivery">
+        <option value="">Seleccionar...</option>
+        <option>Entrega a domicilio en Aguascalientes</option>
+        <option>Recoger en punto acordado</option>
+        <option>Armado e instalación en mi casa</option>
+      </select>
+
+      <label class="gf-label">Notas adicionales</label>
+      <textarea class="gf-textarea" id="o-notes" placeholder="¿Alguna pregunta o petición especial?"></textarea>
+
+      <button class="btn-send-order" id="sendOrderBtn" onclick="sendOrder()">
+        ENVIAR ORDEN
+      </button>
+      <div class="order-status" id="orderStatus"></div>
+
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════ -->
+  <footer class="gamer-footer">
+    <span class="footer-brand">Pixel <span>Waves</span> · Gamer Division</span>
+    <p>© 2025 Pixel Waves — Aguascalientes, México</p>
+    <a href="../index.html" class="footer-back">← Volver al sitio principal</a>
+  </footer>
+
+
+  <!-- Scripts -->
+  <script src="./prearmados.js"></script>
+
+</body>
+</html>

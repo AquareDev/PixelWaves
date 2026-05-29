@@ -146,14 +146,24 @@ const catalog = {
   ram: {
     label: 'RAM',
     icon: '💾',
+    quantityEnabled: true,   // flag for rendering RAM with quantity picker
     items: [
-      { id: 'ddr4-16-3200', brand:'Kingston', name:'Fury Beast 16GB DDR4',  spec:'2×8GB · 3200MHz · CL16', tier:'budget', price:800 },
-      { id: 'ddr4-32-3600', brand:'Corsair',  name:'Vengeance 32GB DDR4',   spec:'2×16GB · 3600MHz · CL18',tier:'mid',    price:1400 },
-      { id: 'ddr4-32-4000', brand:'G.Skill',  name:'Trident Z 32GB DDR4',   spec:'2×16GB · 4000MHz · CL16',tier:'high',   price:2000 },
-      { id: 'ddr5-16-5600', brand:'Corsair',  name:'Dominator 16GB DDR5',   spec:'2×8GB · 5600MHz · CL36', tier:'mid',    price:1600 },
-      { id: 'ddr5-32-5600', brand:'G.Skill',  name:'Trident Z5 32GB DDR5',  spec:'2×16GB · 5600MHz · CL30',tier:'high',   price:2800 },
-      { id: 'ddr5-32-6000', brand:'Kingston', name:'Fury Beast 32GB DDR5',  spec:'2×16GB · 6000MHz · CL30',tier:'high',   price:3200 },
-      { id: 'ddr5-64-6000', brand:'G.Skill',  name:'Trident Z5 64GB DDR5',  spec:'2×32GB · 6000MHz · CL30',tier:'ultra',  price:5800 },
+      /* DDR4 */
+      { id: 'ddr4-8-3200-king',  brand:'Kingston', name:'Fury Beast DDR4 8GB',   spec:'8GB · 3200MHz · CL16 · DDR4', tier:'budget', price:420 },
+      { id: 'ddr4-16-3200-king', brand:'Kingston', name:'Fury Beast DDR4 16GB',  spec:'16GB · 3200MHz · CL16 · DDR4',tier:'budget', price:800 },
+      { id: 'ddr4-8-3600-cors',  brand:'Corsair',  name:'Vengeance DDR4 8GB',    spec:'8GB · 3600MHz · CL18 · DDR4', tier:'budget', price:450 },
+      { id: 'ddr4-16-3600-cors', brand:'Corsair',  name:'Vengeance DDR4 16GB',   spec:'16GB · 3600MHz · CL18 · DDR4',tier:'mid',    price:850 },
+      { id: 'ddr4-16-4000-gsk',  brand:'G.Skill',  name:'Trident Z DDR4 16GB',   spec:'16GB · 4000MHz · CL16 · DDR4',tier:'high',   price:1000 },
+      { id: 'ddr4-32-4000-gsk',  brand:'G.Skill',  name:'Trident Z DDR4 32GB',   spec:'32GB · 4000MHz · CL16 · DDR4',tier:'high',   price:1900 },
+      /* DDR5 */
+      { id: 'ddr5-8-5600-cors',  brand:'Corsair',  name:'Dominator DDR5 8GB',    spec:'8GB · 5600MHz · CL36 · DDR5', tier:'mid',    price:700 },
+      { id: 'ddr5-16-5600-cors', brand:'Corsair',  name:'Dominator DDR5 16GB',   spec:'16GB · 5600MHz · CL36 · DDR5',tier:'mid',    price:1300 },
+      { id: 'ddr5-16-5600-gsk',  brand:'G.Skill',  name:'Trident Z5 DDR5 16GB',  spec:'16GB · 5600MHz · CL30 · DDR5',tier:'high',   price:1400 },
+      { id: 'ddr5-32-6000-gsk',  brand:'G.Skill',  name:'Trident Z5 DDR5 32GB',  spec:'32GB · 6000MHz · CL30 · DDR5',tier:'high',   price:2600 },
+      { id: 'ddr5-16-6000-king', brand:'Kingston', name:'Fury Beast DDR5 16GB',  spec:'16GB · 6000MHz · CL30 · DDR5',tier:'high',   price:1500 },
+      { id: 'ddr5-32-6000-king', brand:'Kingston', name:'Fury Beast DDR5 32GB',  spec:'32GB · 6000MHz · CL30 · DDR5',tier:'high',   price:2900 },
+      { id: 'ddr5-32-6000-cors', brand:'Corsair',  name:'Vengeance DDR5 32GB',   spec:'32GB · 6000MHz · CL30 · DDR5',tier:'high',   price:2700 },
+      { id: 'ddr5-64-6000-gsk',  brand:'G.Skill',  name:'Trident Z5 DDR5 64GB',  spec:'64GB · 6000MHz · CL30 · DDR5',tier:'ultra',  price:5200 },
     ]
   },
 
@@ -237,11 +247,14 @@ const CATEGORY_KEYS = Object.keys(catalog);
 /* =============================================================
    STATE
    ============================================================= */
-let selectedComponents = {};   // { cpu: item, gpu: item, ... }
+let selectedComponents = {};   // { cpu: item, gpu: item, ram: {item, qty}, ... }
 let activeCategory = 'cpu';
 
 /* ─── Filter state ─── */
 let activeFilter = { brand: 'all', tier: 'all', sort: 'default' };
+
+/* ─── RAM quantity state ─── */
+let ramQty = 2; // default 2 sticks
 
 /* =============================================================
    RENDER HELPERS
@@ -256,7 +269,10 @@ function formatPrice(p) {
 }
 
 function buildTotal() {
-  return Object.values(selectedComponents).reduce((s, it) => s + it.price, 0);
+  return Object.entries(selectedComponents).reduce((s, [catKey, it]) => {
+    if (catKey === 'ram') return s + it.price * (it.qty || 1);
+    return s + it.price;
+  }, 0);
 }
 
 /* ─── Render component grid ─── */
@@ -289,16 +305,38 @@ function renderComponents(catKey) {
     return;
   }
 
-  grid.innerHTML = items.map(item => `
-    <div class="comp-item ${selectedComponents[catKey]?.id === item.id ? 'selected' : ''}"
+  /* ── RAM quantity selector header ── */
+  let qtyHeader = '';
+  if (cat.quantityEnabled) {
+    const selQty = selectedComponents['ram']?.qty || ramQty;
+    qtyHeader = `
+      <div class="ram-qty-bar">
+        <span class="ram-qty-label">💾 Cantidad de memorias:</span>
+        <div class="ram-qty-pills">
+          ${[1,2,4].map(q => `
+            <button class="ram-qty-pill ${selQty === q ? 'active' : ''}" onclick="setRamQty(${q})">${q} módulo${q>1?'s':''}</button>
+          `).join('')}
+        </div>
+        ${selectedComponents['ram'] ? `<span class="ram-qty-total">Total RAM: ${selectedComponents['ram'].qty * parseInt(selectedComponents['ram'].name.match(/(\d+)GB/)?.[1]||0)}GB</span>` : ''}
+      </div>`;
+  }
+
+  grid.innerHTML = qtyHeader + items.map(item => {
+    const isSelected = selectedComponents[catKey]?.id === item.id;
+    const qty = cat.quantityEnabled ? (selectedComponents['ram']?.qty || ramQty) : 1;
+    const displayPrice = cat.quantityEnabled
+      ? `${formatPrice(item.price)} × ${qty} = ${formatPrice(item.price * qty)}`
+      : formatPrice(item.price);
+    return `
+    <div class="comp-item ${isSelected ? 'selected' : ''}"
          onclick="selectComponent('${catKey}','${item.id}')">
       <span class="comp-tier tier-${item.tier}">${getTierLabel(item.tier)}</span>
       <span class="comp-brand">${item.brand}</span>
       <span class="comp-name">${item.name}</span>
       <span class="comp-spec">${item.spec}</span>
-      <span class="comp-price">${formatPrice(item.price)}</span>
-    </div>
-  `).join('');
+      <span class="comp-price">${displayPrice}</span>
+    </div>`;
+  }).join('');
 }
 
 /* ─── Render build summary ─── */
@@ -322,16 +360,20 @@ function renderSummary() {
     return;
   }
 
-  itemsEl.innerHTML = entries.map(([catKey, item]) => `
+  itemsEl.innerHTML = entries.map(([catKey, item]) => {
+    const qty = catKey === 'ram' ? item.qty || 1 : 1;
+    const totalPrice = item.price * qty;
+    const qtyLabel = catKey === 'ram' ? ` × ${qty}` : '';
+    return `
     <div class="summary-item">
       <span class="si-cat">${catalog[catKey].label}</span>
       <div class="si-info">
-        <div class="si-name">${item.brand} ${item.name}</div>
-        <div class="si-price">${formatPrice(item.price)}</div>
+        <div class="si-name">${item.brand} ${item.name}${qtyLabel}</div>
+        <div class="si-price">${formatPrice(totalPrice)}</div>
       </div>
       <button class="si-remove" onclick="removeComponent('${catKey}')" title="Quitar">✕</button>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 
   sendBtn.disabled = entries.length < 3;
   renderCompatBars();
@@ -367,13 +409,26 @@ function switchCategory(catKey) {
   renderComponents(catKey);
 }
 
+function setRamQty(qty) {
+  ramQty = qty;
+  if (selectedComponents['ram']) {
+    selectedComponents['ram'].qty = qty;
+    renderSummary();
+  }
+  renderComponents('ram');
+}
+
 function selectComponent(catKey, itemId) {
   const item = catalog[catKey].items.find(i => i.id === itemId);
   if (!item) return;
   if (selectedComponents[catKey]?.id === itemId) {
     delete selectedComponents[catKey];
   } else {
-    selectedComponents[catKey] = item;
+    if (catKey === 'ram') {
+      selectedComponents[catKey] = { ...item, qty: ramQty };
+    } else {
+      selectedComponents[catKey] = item;
+    }
   }
   renderComponents(catKey);
   renderSummary();
@@ -418,9 +473,13 @@ async function sendBuild() {
     return;
   }
 
-  const buildList = entries.map(([catKey, item]) =>
-    `${catalog[catKey].label.padEnd(12)}: ${item.brand} ${item.name} — ${formatPrice(item.price)}`
-  ).join('\n');
+  const buildList = entries.map(([catKey, item]) => {
+    if (catKey === 'ram') {
+      const qty = item.qty || 1;
+      return `${catalog[catKey].label.padEnd(12)}: ${item.brand} ${item.name} × ${qty} — ${formatPrice(item.price * qty)}`;
+    }
+    return `${catalog[catKey].label.padEnd(12)}: ${item.brand} ${item.name} — ${formatPrice(item.price)}`;
+  }).join('\n');
 
   btn.disabled = true;
   btn.textContent = 'ENVIANDO...';
